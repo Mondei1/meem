@@ -1,0 +1,8 @@
+CREATE TABLE user (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL,
+    created_at DATETIME NOT NULL,
+    last_login DATETIME NOT NULL,
+    is_admin BOOLEAN DEFAULT(FALSE)
+)

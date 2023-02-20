@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MEEM</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="next">Weiter</string>
+    <string name="previous">Zuürck</string>
+    <string name="operation_mode">Funktionsweise</string>
+    <string name="operation_mode_explaination">MEEM kann lokal als auch zusammen mit einem Server arbeiten.</string>
+    <string name="local">Lokal</string>
+    <string name="server">Extern</string>
+    <string name="no_extra_steps">Keine weiteren Schritt sind notwendig.</string>
+    <string name="local_explanation">Memes werden lokal gespeichert und verwaltet.</string>
+    <string name="server_host">Server Host</string>
+    <string name="server_host_explaination">Zum Beispiel 192.168.178.20 oder deine Domain.</string>
+    <string name="permission">Rechte</string>
+    <string name="permission_explaination">MEEM benötigt Zugang zu deiner kostbaren Meme-Sammlung.</string>
+    <string name="grant">Erlauben</string>
+    <string name="server_host_explanation">Memes werden auf einem externen Server gespeichert und verwaltet.</string>
+    <string name="permission_explanation">MEEM benötigt Zugang zu deinen kostbaren Memes.</string>
+    <string name="permission_declined">Diese Rechte sind notwendig. Bitte versuche es nochmal.</string>
+    <string name="permissions_granted">Rechte erteilt</string>
+</resources>
