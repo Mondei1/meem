@@ -1,10 +1,25 @@
-# MEEM
-It's a tool to organize your own meme library by assigning tags to each meme.
+<h1 align="center">MEEM</h1>
+<p align="center">It's a tool to organize your own meme library by assigning tags to each meme.</p>
+
+<br>
+<p float="left" align="middle">
+  <img src="designs/MemeOverview.png" width="40%" />
+  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+  <img src="designs/MemeSingleView.png" width="40%" />
+</p>
+<p align="middle">
+  <i>These are only Figma designs at the point of writing. They are subject to change.</i>
+</p>
+
+# Current state
+This project isn't finished. It isn't even usable yet.
+
+I recommend you to not even try to build it yourself. Give me some more time to do it right.
 
 ## Architecture
-MEEM is built with two main parts:
-1. **Rust backend:** Handles user authentication, database access and way more.
-2. **Android app:** Is the user frontend to access all the fancy memes and to interact with the backend.
+MEEM can used in two modes:
+- **Local mode:** Storage and management happens on your Android device.
+- **External mode:** Storage and management is on an external server hosted by you. Useful for large meme folders that need to be streamed.
 
 ## License
 This project is licensed under the **Apache License 2.0** as stated in the project root.
