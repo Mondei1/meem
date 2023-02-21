@@ -11,6 +11,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import com.google.android.material.color.DynamicColors
 import dev.klier.meem.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -24,6 +25,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        DynamicColors.applyToActivitiesIfAvailable(application)
 
         //setSupportActionBar(binding.toolbar)
 

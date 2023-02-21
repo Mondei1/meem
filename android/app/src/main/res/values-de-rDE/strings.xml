@@ -19,4 +19,6 @@
     <string name="permission_explanation">MEEM benötigt Zugang zu deinen kostbaren Memes.</string>
     <string name="permission_declined">Diese Rechte sind notwendig. Bitte versuche es nochmal.</string>
     <string name="permissions_granted">Rechte erteilt</string>
+    <string name="albums">Alben</string>
+    <string name="albums_explanation">Wähle deine Meme Alben aus.</string>
 </resources>

@@ -1,15 +1,16 @@
 package dev.klier.meem
 
-import android.content.ContentUris
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import dev.klier.meem.databinding.FragmentSetupOperationModeBinding
+import androidx.recyclerview.widget.GridLayoutManager
+import dev.klier.meem.databinding.FragmentSetupGalleryBinding
+import dev.klier.meem.manager.DeviceImageManager
+import java.util.*
 
 
 /**
@@ -24,7 +25,7 @@ class SetupGalleryFragment : Fragment() {
     )
     val albumList = mutableListOf<Album>()
 
-    private var _binding: FragmentSetupOperationModeBinding? = null
+    private var _binding: FragmentSetupGalleryBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -34,46 +35,20 @@ class SetupGalleryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentSetupOperationModeBinding.inflate(inflater, container, false)
+        _binding = FragmentSetupGalleryBinding.inflate(inflater, container, false)
 
-        val projection = arrayOf(
-            MediaStore.Images.Media._ID,
-            MediaStore.Images.Media.BUCKET_DISPLAY_NAME,
-            MediaStore.Images.Media.SIZE
-        )
+        val photos = DeviceImageManager.getInstance()
+        context?.let {
+            val albums = photos.getPhoneAlbums(it)
 
-        val images: Uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-
-        val query = context?.contentResolver?.query(
-            images,
-            projection,  // Which columns to return
-            null,  // Which rows to return (all rows)
-            null,  // Selection arguments (none)
-            null // Ordering
-        )
-
-        query?.use { cursor ->
-            val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
-            val nameColumn =
-                cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
-            val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE)
-
-            while (cursor.moveToNext()) {
-                val id = cursor.getLong(idColumn)
-                val name = cursor.getString(nameColumn)
-                val size = cursor.getInt(sizeColumn)
-
-                val contentUri: Uri = ContentUris.withAppendedId(
-                    MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-                    id
-                )
-
-                Log.i("Discover", "Found: $name")
-
-                // Stores column values and the contentUri in a local object
-                // that represents the media file.
-                albumList += Album(contentUri, name, size)
+            Log.i("Gallery fragment", "Finished scan!")
+            albums?.forEach { album ->
+                Log.i("Gallery fragment", "Found: ${album?.name} (${album?.albumPhotos?.size})")
             }
+
+            binding.galleryView.adapter =  GalleryAdapter(albums!!, Vector())
+            binding.galleryView.layoutManager = GridLayoutManager(context, 3)
+            binding.galleryView.isNestedScrollingEnabled = false
         }
 
         return binding.root
