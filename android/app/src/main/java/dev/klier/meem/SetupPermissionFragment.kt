@@ -35,7 +35,6 @@ class SetupPermissionFragment : Fragment() {
                 ActivityResultContracts.RequestPermission()
             ) { isGranted: Boolean ->
                 if (isGranted) {
-                    // TODO: Nav to next screen
                     Toast.makeText(context, R.string.permissions_granted, Toast.LENGTH_LONG).show()
                     findNavController().navigate(R.id.Permission_to_Gallery)
                 } else {
@@ -52,22 +51,16 @@ class SetupPermissionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonGrant.setOnClickListener {
-            requestPermissionLauncher?.launch(android.Manifest.permission.READ_MEDIA_IMAGES)
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                requestPermissionLauncher?.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+            } else {
+                requestPermissionLauncher?.launch(android.Manifest.permission.READ_MEDIA_IMAGES)
+            }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun isPhotoPickerAvailable(): Boolean {
-        return when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> true
-            true -> {
-                getExtensionVersion(Build.VERSION_CODES.R) >= 2
-            }
-            else -> false
-        }
     }
 }

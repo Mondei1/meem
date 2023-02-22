@@ -66,7 +66,6 @@ class GalleryAdapter(private val dataSet: Vector<PhoneAlbum?>, private val activ
             }
 
             if (activatedElements.contains(position)) {
-                Log.i("Gallery Adapter", "Element #$position is active")
                 setActiveColors(viewHolder)
             } else {
                 resetColors(viewHolder)

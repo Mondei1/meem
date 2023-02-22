@@ -11,8 +11,10 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.room.Room
 import com.google.android.material.color.DynamicColors
 import dev.klier.meem.databinding.ActivityMainBinding
+import dev.klier.meem.models.AppDatabase
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +29,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         DynamicColors.applyToActivitiesIfAvailable(application)
+
+        val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "meem").build()
 
         //setSupportActionBar(binding.toolbar)
 

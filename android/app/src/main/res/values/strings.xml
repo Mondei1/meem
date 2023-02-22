@@ -24,5 +24,6 @@
     <string name="permissions_granted">Permissions granted</string>
     <string name="albums">Albums</string>
     <string name="albums_explanation">Select your meme albums.</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="import_progress">%1$s of %2$s have been imported.</string>
+    <string name="import_explanation">Hold tight while your memes are being imported.</string>
 </resources>

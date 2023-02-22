@@ -37,5 +37,14 @@
         android:id="@+id/GalleryFragment"
         android:name="dev.klier.meem.SetupGalleryFragment"
         android:label="fragment_setup_gallery"
-        tools:layout="@layout/fragment_setup_gallery" />
+        tools:layout="@layout/fragment_setup_gallery" >
+        <action
+            android:id="@+id/Gallery_To_Import"
+            app:destination="@id/ImportFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ImportFragment"
+        android:name="dev.klier.meem.SetupImportFragment"
+        android:label="fragment_setup_import"
+        tools:layout="@layout/fragment_setup_import" />
 </navigation>

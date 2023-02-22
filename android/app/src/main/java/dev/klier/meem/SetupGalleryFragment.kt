@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import dev.klier.meem.databinding.FragmentSetupGalleryBinding
 import dev.klier.meem.manager.DeviceImageManager
@@ -18,13 +19,6 @@ import java.util.*
  */
 class SetupGalleryFragment : Fragment() {
 
-    data class Album(
-        val uri: Uri,
-        val name: String,
-        val size: Int
-    )
-    val albumList = mutableListOf<Album>()
-
     private var _binding: FragmentSetupGalleryBinding? = null
 
     // This property is only valid between onCreateView and
@@ -34,7 +28,7 @@ class SetupGalleryFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSetupGalleryBinding.inflate(inflater, container, false)
 
         val photos = DeviceImageManager.getInstance()
@@ -46,9 +40,15 @@ class SetupGalleryFragment : Fragment() {
                 Log.i("Gallery fragment", "Found: ${album?.name} (${album?.albumPhotos?.size})")
             }
 
-            binding.galleryView.adapter =  GalleryAdapter(albums!!, Vector())
+            val selected: Vector<Int> = Vector()
+            binding.galleryView.adapter =  GalleryAdapter(albums!!, selected)
             binding.galleryView.layoutManager = GridLayoutManager(context, 3)
             binding.galleryView.isNestedScrollingEnabled = false
+
+            binding.albumNext.setOnClickListener {
+                Log.i("Setup Gallery", selected.joinToString(", "))
+                findNavController().navigate(R.id.Gallery_To_Import)
+            }
         }
 
         return binding.root
