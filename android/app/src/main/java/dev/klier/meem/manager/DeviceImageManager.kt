@@ -3,23 +3,31 @@ package dev.klier.meem.manager
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
+import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.provider.MediaStore
 import android.util.Log
 import dev.klier.meem.types.PhoneAlbum
 import dev.klier.meem.types.PhonePhoto
+import java.security.KeyPair
 import java.util.*
 
-class DeviceImageManager {
+class DeviceImageManager : java.io.Serializable {
+
+    // List of album ids
+    // (Index of album selection, Album Id)
+    var selected: List<Pair<Int, Int>> = listOf()
+    var albumCache: List<PhoneAlbum?> = listOf()
+
     companion object Factory {
         fun getInstance(): DeviceImageManager = DeviceImageManager()
     }
 
     // Thanks to @Barakuda on StackOverflow
     // https://stackoverflow.com/questions/4195660/get-list-of-photo-galleries-on-android
-    fun getPhoneAlbums(context: Context): Vector<PhoneAlbum?>? {
+    fun populateCache(context: Context): List<PhoneAlbum?>? {
         // Creating vectors to hold the final albums objects and albums names
-        val phoneAlbums: Vector<PhoneAlbum?> = Vector()
-        val albumsNames: Vector<String> = Vector()
+        val phoneAlbums: MutableList<PhoneAlbum?> = Vector()
+        val albumsNames: MutableList<String> = Vector()
 
         // which image properties are we querying
         val projection = arrayOf(
@@ -87,6 +95,8 @@ class DeviceImageManager {
                 } while (cur.moveToNext())
             }
             cur.close()
+
+            this.albumCache = phoneAlbums.toList()
 
             return phoneAlbums
         } else {

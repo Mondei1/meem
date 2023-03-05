@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/OperationModeFragment"
-        android:name="dev.klier.meem.SetupOperationModeFragment"
+        android:name="dev.klier.meem.activities.setup.SetupOperationModeFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_setup_operation_mode">
 
@@ -19,10 +19,16 @@
             app:launchSingleTop="false"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/appAlreadySetup"
+            app:destination="@id/mainActivity" />
+        <action
+            android:id="@+id/skipPermission"
+            app:destination="@id/GalleryFragment" />
     </fragment>
     <fragment
         android:id="@+id/PermissionFragment"
-        android:name="dev.klier.meem.SetupPermissionFragment"
+        android:name="dev.klier.meem.activities.setup.SetupPermissionFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_setup_permission">
         <action
@@ -35,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/GalleryFragment"
-        android:name="dev.klier.meem.SetupGalleryFragment"
+        android:name="dev.klier.meem.activities.setup.SetupGalleryFragment"
         android:label="fragment_setup_gallery"
         tools:layout="@layout/fragment_setup_gallery" >
         <action
@@ -44,7 +50,16 @@
     </fragment>
     <fragment
         android:id="@+id/ImportFragment"
-        android:name="dev.klier.meem.SetupImportFragment"
+        android:name="dev.klier.meem.activities.setup.SetupImportFragment"
         android:label="fragment_setup_import"
-        tools:layout="@layout/fragment_setup_import" />
+        tools:layout="@layout/fragment_setup_import" >
+        <action
+            android:id="@+id/importDone"
+            app:destination="@id/mainActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="dev.klier.meem.activities.main.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
 </navigation>

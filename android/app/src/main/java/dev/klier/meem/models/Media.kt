@@ -32,6 +32,13 @@ interface MediaDao {
     @Query("SELECT * FROM media")
     fun getMediaWithTags(): List<MediaWithTags>
 
+    @Transaction
+    fun bulkInsert(mediaList: List<Media>) {
+        for (media in mediaList) {
+            insert(media)
+        }
+    }
+
     @Insert
     fun insert(vararg media: Media)
 

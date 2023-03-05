@@ -1,7 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="dev.klier.meem.MainActivity">
+    tools:context="dev.klier.meem.activities.setup.StartupActivity">
+    <item
+        android:id="@+id/action_memes"
+        android:orderInCategory="100"
+        android:title="@string/action_memes"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_sort"
+        android:orderInCategory="100"
+        android:title="@string/action_sort"
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

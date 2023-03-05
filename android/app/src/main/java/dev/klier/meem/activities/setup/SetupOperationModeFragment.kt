@@ -1,5 +1,7 @@
-package dev.klier.meem
+package dev.klier.meem.activities.setup
 
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import dev.klier.meem.R
 import dev.klier.meem.databinding.FragmentSetupOperationModeBinding
 
 /**
@@ -35,7 +38,17 @@ class SetupOperationModeFragment : Fragment() {
         }
 
         binding.operationModeNextButton.setOnClickListener {
-            findNavController().navigate(R.id.Operation_to_Permission)
+            val targetPermission: String = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
+            } else {
+                android.Manifest.permission.READ_MEDIA_IMAGES
+            }
+
+            if (requireContext().checkCallingOrSelfPermission(targetPermission) == PackageManager.PERMISSION_GRANTED) {
+                findNavController().navigate(R.id.skipPermission)
+            } else {
+                findNavController().navigate(R.id.Operation_to_Permission)
+            }
         }
 
         return binding.root

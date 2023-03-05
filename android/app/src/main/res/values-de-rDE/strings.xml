@@ -23,4 +23,6 @@
     <string name="albums_explanation">Wähle deine Meme Alben aus.</string>
     <string name="import_progress">%1$s von %2$s wurden importiert.</string>
     <string name="import_explanation">Warte kurz während deine Memes importiert werden.</string>
+    <string name="action_memes">Memes</string>
+    <string name="action_sort">Sortieren</string>
 </resources>

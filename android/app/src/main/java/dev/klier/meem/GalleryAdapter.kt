@@ -1,8 +1,6 @@
 package dev.klier.meem
 
 import android.annotation.SuppressLint
-import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,22 +9,22 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
-import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
+import dev.klier.meem.manager.DeviceImageManager
 import dev.klier.meem.types.PhoneAlbum
 import java.io.File
 import java.util.Vector
-import kotlin.coroutines.coroutineContext
 
-class GalleryAdapter(private val dataSet: Vector<PhoneAlbum?>, private val activatedElements: Vector<Int>) :
+class GalleryAdapter(private val dmi: DeviceImageManager, private val selected: MutableList<Pair<Int, Int>>) :
     RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
+
+    private val dataSet: List<PhoneAlbum?> = dmi.albumCache
 
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder)
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var isActive = false
         val textView: TextView
         val cover: ImageView
         val card: MaterialCardView
@@ -47,39 +45,41 @@ class GalleryAdapter(private val dataSet: Vector<PhoneAlbum?>, private val activ
         return ViewHolder(view)
     }
 
+    private fun isSelected(position: Int): Boolean {
+        return selected.any { pair -> pair.first == position }
+    }
+
     // Replace the contents of a view (invoked by the layout manager)
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        if (dataSet[position] != null) {
-            viewHolder.textView.text = "${dataSet[position]?.name} (${dataSet[position]?.albumPhotos?.size})"
+        viewHolder.textView.text = "${dataSet[position]?.name} (${dataSet[position]?.albumPhotos?.size})"
 
-            viewHolder.card.setOnClickListener {
-                if (activatedElements.contains(position)) {
-                    activatedElements.remove(position)
-                    resetColors(viewHolder)
-                } else {
-                    activatedElements.add(position)
-                    setActiveColors(viewHolder)
-                }
-            }
-
-            if (activatedElements.contains(position)) {
-                setActiveColors(viewHolder)
-            } else {
+        viewHolder.card.setOnClickListener {
+            if (isSelected(position)) {
+                selected.removeIf { pair -> pair.first == position }
                 resetColors(viewHolder)
+            } else {
+                selected.add(Pair(position, dataSet[position]!!.id))
+                setActiveColors(viewHolder)
             }
-
-            val pic = Picasso.get()
-            pic
-                .load(File(dataSet[position]?.coverUri?.path.toString()))
-                .centerCrop()
-                .fit()
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .error(R.drawable.ic_launcher_background)
-                .into(viewHolder.cover)
         }
+
+        if (isSelected(position)) {
+            setActiveColors(viewHolder)
+        } else {
+            resetColors(viewHolder)
+        }
+
+        val pic = Picasso.get()
+        pic
+            .load(File(dataSet[position]?.coverUri?.path.toString()))
+            .centerCrop()
+            .fit()
+            .placeholder(R.drawable.ic_launcher_foreground)
+            .error(R.drawable.ic_launcher_background)
+            .into(viewHolder.cover)
     }
 
     private fun setActiveColors(viewHolder: ViewHolder) {
